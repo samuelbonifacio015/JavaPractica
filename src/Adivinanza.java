@@ -28,10 +28,56 @@ public class Adivinanza {
             boolean acertado = false;
 
             while (intentos < MAX_INTENTOS) {
-                System.out.println("\nLo siento, se han acabado los intentos");
-                System.out.println("\nGame over :(");
+                intentos++;
+                System.out.println("\nIntento (" + intentos + "), Ingresa tu numero: ");
+
+                if(!sc.hasNextInt()){
+                    String basura = sc.next();
+                    System.out.println("Entrada inválida: '" + basura + "'. Ingresa un número entero.");
+                    intentos--; // no contar intento inválido
+                    continue;
+                }
+
+                int apuesta = sc.nextInt();
+
+                //si la apuesta esta fuera del rango
+                if (apuesta < MIN || apuesta > MAX) {
+                    System.out.println("\nNumero esta fuera de rango. Debe estar entre 1 y 10");
+                    intentos--; //no contar como intento válido
+                    continue;
+                }
+
+                //si la apuesta es el objetivo
+                if (apuesta == objetivo){
+                    System.out.println("\n¡Correcto! Adivinaste en " + intentos + " intento(s).");
+                    acertado = true;
+                    if (intentos < bestScore) bestScore = intentos;
+                    break;
+
+                    //si el num apuesta es menor al objetivo, entonces el sistema indica
+                    //que el num es mas alto y viceversa
+                }else if (apuesta < objetivo) {
+                    System.out.println("\nMas alto.");
+                }else {
+                    System.out.println("\nMas bajo");
+                }
             }
+
+            //si no es acertado despues de todos los intentos, se muestra gameover
+            if (!acertado) {
+                System.out.println("Se acabaron los intentos, el numero era: " + objetivo);
+            }
+
+            //el sistema pregunta al usuario si quiere jugar de nuevo
+            System.out.println("\nDesea jugar de nuevo? (s/n)");
+            String resp = sc.next();
+            //jugar ve si el usuario responde s o y
+            jugar = resp.equalsIgnoreCase("s") || resp.equalsIgnoreCase("y");
         }
+        if (bestScore != Integer.MAX_VALUE){
+            System.out.println("\nLo sentimos!, tu mejor resultado fue: " + bestScore + "intento(s).");
+        }
+        System.out.println("Gracias por jugar! Hasta la proxima!");
         sc.close();
     }
 }
