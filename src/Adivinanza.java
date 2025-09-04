@@ -29,7 +29,7 @@ public class Adivinanza {
 
             while (intentos < MAX_INTENTOS) {
                 intentos++;
-                System.out.println("\nIntento (" + intentos + "), Ingresa tu numero: ");
+                System.out.println("\nIntento (" + intentos + ") \nIngresa tu numero: ");
 
                 if(!sc.hasNextInt()){
                     String basura = sc.next();
